@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Entity;
+import javax.persistence.EntityExistsException;
 import java.util.UUID;
 
 @RestController
@@ -43,12 +45,17 @@ public class ClienteController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addOne(@RequestBody Cliente cliente){
+    public ResponseEntity<?> addOne(@RequestBody Cliente cliente) throws EntityExistsException {
         logger.info("POST / Creacion de Cliente request: " + cliente);
         try {
-            cliente = clienteService.addOne(cliente);
-            return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
-        } catch (Exception exception) {
+            Cliente cli = clienteService.findOneByDni(cliente.getDniCliente());
+            if(cli != null)
+                throw new EntityExistsException("El cliente ya existe en la base de datos");
+            return new ResponseEntity<Cliente>(clienteService.addOne(cliente), HttpStatus.CREATED);
+        } catch (EntityExistsException exception) {
+            logger.info(exception.getMessage());
+            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (Exception exception) {
             logger.info("Error en la llamada al servicio: " + exception.getMessage());
             return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -96,7 +103,7 @@ public class ClienteController {
     }
 
     @RequestMapping(value = "/{id}/promociones/{idPromo}", method = RequestMethod.PUT)
-    public ResponseEntity<?> update(@PathVariable String id, @PathVariable String idPromo) throws NotFoundException {
+    public ResponseEntity<?> update(@PathVariable String id, @PathVariable String idPromo) throws NotFoundException, EntityExistsException {
         logger.info("PUT / asignacion de la promocion id: " + idPromo +  " al cliente id: " + id);
             try {
                 Promocion promo = promocionService.findOne(UUID.fromString(idPromo));
@@ -107,6 +114,9 @@ public class ClienteController {
             } catch (NotFoundException exc) {
                 logger.info("Error en la busqueda. El Cliente o la Promocion no existen");
                 return new ResponseEntity(HttpStatus.NOT_FOUND);
+            } catch (EntityExistsException exception) {
+                logger.info(exception.getMessage());
+                return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             } catch (Exception exception) {
                 logger.info("Error en la llamada al servicio: " + exception.getMessage());
                 return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

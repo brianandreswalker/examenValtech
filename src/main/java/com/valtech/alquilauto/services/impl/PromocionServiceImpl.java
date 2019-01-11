@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -71,10 +72,14 @@ public class PromocionServiceImpl implements IPromocionService {
     }
 
     @Override
-    public List<Promocion> addPromoToCliente(Promocion promocion, Cliente cliente) {
+    public List<Promocion> addPromoToCliente(Promocion promocion, Cliente cliente) throws EntityExistsException {
         List<Promocion> promocionesCliente = cliente.getPromociones();
 
-        if(cliente.getPromociones() != null){
+        if (cliente.getPromociones() != null) {
+            for (Promocion promo : promocionesCliente) {
+                if(promo.getId().equals(promocion.getId()))
+                    throw new EntityExistsException("La Promocion ya existe para el cliente");
+            }
             promocionesCliente.add(promocion);
         } else {
             cliente.setPromociones(new ArrayList<>());

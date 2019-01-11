@@ -21,6 +21,9 @@ public class Cliente implements Serializable {
         this.id = UUID.randomUUID();
     }
 
+    public Cliente(){
+    }
+
     public UUID getId() {
         return id;
     }
