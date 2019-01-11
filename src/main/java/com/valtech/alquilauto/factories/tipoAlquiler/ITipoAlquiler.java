@@ -1,8 +1,8 @@
 package com.valtech.alquilauto.factories.tipoAlquiler;
 
-import com.valtech.alquilauto.entities.Alquiler;
+import com.valtech.alquilauto.entities.Solicitud;
 
 public interface ITipoAlquiler {
 
-    void calcularCosto(Alquiler alquiler);
+    void calcularCosto(Solicitud solicitud);
 }

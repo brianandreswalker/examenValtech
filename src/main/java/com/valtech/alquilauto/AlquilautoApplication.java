@@ -2,64 +2,62 @@ package com.valtech.alquilauto;
 
 import com.valtech.alquilauto.entities.Automovil;
 import com.valtech.alquilauto.entities.Cliente;
+import com.valtech.alquilauto.entities.Promocion;
 import com.valtech.alquilauto.entities.Solicitud;
-import com.valtech.alquilauto.entities.TipoAlquiler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @SpringBootApplication
 public class AlquilautoApplication {
 
-	private static List<Solicitud> arraySolicitudes = new ArrayList<>();
-	private static List<Automovil> arrayAutomoviles = new ArrayList<>();
-	private static List<Cliente> arrayClientes = new ArrayList<>();
-	private static List<TipoAlquiler> arrayTipoAlquileres = new ArrayList<>();
+	private static Map<UUID, Solicitud> arraySolicitudes = new HashMap<>();
+	private static Map<Long, Automovil> arrayAutomoviles = new HashMap<>();
+	private static Map<UUID, Cliente> arrayClientes = new HashMap<>();
+	private static Map<UUID, Promocion> arrayPromociones = new HashMap<>();
 
 	public static void main(String[] args) {
-		arrayAutomoviles.add(new Automovil(1L,true,"AAA111"));
-		arrayAutomoviles.add(new Automovil(2L,true,"BBB222"));
-		arrayAutomoviles.add(new Automovil(3L,true,"CCC333"));
-		arrayAutomoviles.add(new Automovil(4L,true,"DDD444"));
-		arrayAutomoviles.add(new Automovil(5L,true,"EEE555"));
-		arrayAutomoviles.add(new Automovil(6L,true,"FFF666"));
+		arrayAutomoviles.put(1L, new Automovil(1L,true,"AAA111"));
+		arrayAutomoviles.put(2L, new Automovil(2L,true,"BBB222"));
+		arrayAutomoviles.put(3L, new Automovil(3L,true,"CCC333"));
+		arrayAutomoviles.put(4L, new Automovil(4L,true,"DDD444"));
+		arrayAutomoviles.put(5L, new Automovil(5L,true,"EEE555"));
+		arrayAutomoviles.put(6L, new Automovil(6L,true,"FFF666"));
 
 		SpringApplication.run(AlquilautoApplication.class, args);
-
 	}
 
-	public List<Solicitud> getArraySolicitudes() {
+	public static Map<UUID, Solicitud> getArraySolicitudes() {
 		return arraySolicitudes;
 	}
 
-	public void setArraySolicitudes(List<Solicitud> arraySolicitudes) {
-		this.arraySolicitudes = arraySolicitudes;
+	public static void setArraySolicitudes(Map<UUID, Solicitud> arraySolicitudes) {
+		AlquilautoApplication.arraySolicitudes = arraySolicitudes;
 	}
 
-	public List<Automovil> getArrayAutomoviles() {
+	public static Map<Long, Automovil> getArrayAutomoviles() {
 		return arrayAutomoviles;
 	}
 
-	public void setArrayAutomoviles(List<Automovil> arrayAutomoviles) {
-		this.arrayAutomoviles = arrayAutomoviles;
+	public static void setArrayAutomoviles(Map<Long, Automovil> arrayAutomoviles) {
+		AlquilautoApplication.arrayAutomoviles = arrayAutomoviles;
 	}
 
-	public List<Cliente> getArrayClientes() {
+	public static Map<UUID, Cliente> getArrayClientes() {
 		return arrayClientes;
 	}
 
-	public void setArrayClientes(List<Cliente> arrayClientes) {
-		this.arrayClientes = arrayClientes;
+	public static void setArrayClientes(Map<UUID, Cliente> arrayClientes) {
+		AlquilautoApplication.arrayClientes = arrayClientes;
 	}
 
-	public List<TipoAlquiler> getArrayTipoAlquileres() {
-		return arrayTipoAlquileres;
+	public static Map<UUID, Promocion> getArrayPromociones() {
+		return arrayPromociones;
 	}
 
-	public void setArrayTipoAlquileres(List<TipoAlquiler> arrayTipoAlquileres) {
-		this.arrayTipoAlquileres = arrayTipoAlquileres;
+	public static void setArrayPromociones(Map<UUID, Promocion> arrayPromociones) {
+		AlquilautoApplication.arrayPromociones = arrayPromociones;
 	}
 }
 

@@ -3,8 +3,10 @@ package com.valtech.alquilauto.services;
 import com.valtech.alquilauto.entities.Automovil;
 import com.valtech.alquilauto.entities.Cliente;
 import com.valtech.alquilauto.entities.Solicitud;
+import com.valtech.alquilauto.requests.SolicitudRequest;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ISolicitudService {
 
@@ -14,7 +16,7 @@ public interface ISolicitudService {
 
     List<Automovil> findAllAutomoviles();
 
-    Solicitud updateOne(Solicitud solicitud);
+    Solicitud updateOne(SolicitudRequest solicitudRequest);
 
-    Solicitud findOne(Long solicitudId);
+    Solicitud findOne(UUID solicitudId);
 }

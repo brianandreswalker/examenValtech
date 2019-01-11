@@ -1,21 +1,29 @@
 package com.valtech.alquilauto.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Alquiler implements Serializable {
 
-    private Long id;
     private Automovil automovil;
-    private TipoAlquiler tipoAlquiler;
+    private Long idTipoAlquiler;
 
-    private Date fechaInicio;
-    private Date fechaFin;
+    private LocalDateTime fechaInicio;
+    private LocalDateTime fechaFin;
     private Double costoFinal;
-    private Double cantidadKms;
-    private Double cantidadHs;
-    private Integer cantidadSemanas;
+    private Long cantidadKms;
+    private Long cantidadHs;
+    private Long cantidadSemanas;
+    private boolean aplicarPromo;
 
+    public Alquiler(Automovil automovil, Long idTipoAlquiler, boolean aplicarPromo) {
+        this.automovil = automovil;
+        this.idTipoAlquiler = idTipoAlquiler;
+        this.aplicarPromo = aplicarPromo;
+    }
+
+    public Alquiler() {
+    }
 
     public Automovil getAutomovil() {
         return automovil;
@@ -25,51 +33,19 @@ public class Alquiler implements Serializable {
         this.automovil = automovil;
     }
 
-    public Double getCantidadHs() {
-        return cantidadHs;
-    }
-
-    public void setCantidadHs(Double cantidadHs) {
-        this.cantidadHs = cantidadHs;
-    }
-
-    public Integer getCantidadSemanas() {
-        return cantidadSemanas;
-    }
-
-    public void setCantidadSemanas(Integer cantidadSemanas) {
-        this.cantidadSemanas = cantidadSemanas;
-    }
-
-    public Double getCantidadKms() {
-        return cantidadKms;
-    }
-
-    public void setCantidadKms(Double cantidadKms) {
-        this.cantidadKms = cantidadKms;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDateTime fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return fechaFin;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDateTime fechaFin) {
         this.fechaFin = fechaFin;
     }
 
@@ -81,11 +57,43 @@ public class Alquiler implements Serializable {
         this.costoFinal = costoFinal;
     }
 
-    public TipoAlquiler getTipoAlquiler() {
-        return tipoAlquiler;
+    public boolean isAplicarPromo() {
+        return aplicarPromo;
     }
 
-    public void setTipoAlquiler(TipoAlquiler tipoAlquiler) {
-        this.tipoAlquiler = tipoAlquiler;
+    public void setAplicarPromo(boolean aplicarPromo) {
+        this.aplicarPromo = aplicarPromo;
+    }
+
+    public Long getIdTipoAlquiler() {
+        return idTipoAlquiler;
+    }
+
+    public void setIdTipoAlquiler(Long idTipoAlquiler) {
+        this.idTipoAlquiler = idTipoAlquiler;
+    }
+
+    public Long getCantidadKms() {
+        return cantidadKms;
+    }
+
+    public void setCantidadKms(Long cantidadKms) {
+        this.cantidadKms = cantidadKms;
+    }
+
+    public Long getCantidadHs() {
+        return cantidadHs;
+    }
+
+    public void setCantidadHs(Long cantidadHs) {
+        this.cantidadHs = cantidadHs;
+    }
+
+    public Long getCantidadSemanas() {
+        return cantidadSemanas;
+    }
+
+    public void setCantidadSemanas(Long cantidadSemanas) {
+        this.cantidadSemanas = cantidadSemanas;
     }
 }

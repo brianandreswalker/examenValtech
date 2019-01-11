@@ -4,8 +4,7 @@ public enum TipoAlquilerEnum {
 
     POR_HORA(1L, "Alquiler por Hora"),
     POR_KMS(2L, "Alquiler por Kilómetros"),
-    POR_SEMANA(3L, "Alquiler por Semana"),
-    PROMOCIONAL(4L, "Alquiler Promocional");
+    POR_SEMANA(3L, "Alquiler por Semana");
 
     private TipoAlquilerEnum(Long id, String descripcion){
         this.id = id;
@@ -32,7 +31,7 @@ public enum TipoAlquilerEnum {
     }
 
     public boolean existsTipoAlquiler(Long id){
-        if (id.equals(POR_HORA.getId()) || id.equals(POR_KMS.getId()) || id.equals(POR_SEMANA.getId()) || id.equals(PROMOCIONAL.getId())){
+        if (id.equals(POR_HORA.getId()) || id.equals(POR_KMS.getId()) || id.equals(POR_SEMANA.getId())){
             return true;
         } else {
             return false;

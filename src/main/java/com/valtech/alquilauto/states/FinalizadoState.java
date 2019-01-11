@@ -1,21 +1,16 @@
 package com.valtech.alquilauto.states;
 
-import com.valtech.alquilauto.entities.Alquiler;
 import com.valtech.alquilauto.entities.Solicitud;
-import com.valtech.alquilauto.factories.tipoAlquiler.ITipoAlquiler;
-import com.valtech.alquilauto.factories.tipoAlquiler.impl.TipoAlquilerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.valtech.alquilauto.requests.SolicitudRequest;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class FinalizadoState implements SolicitudState, Serializable {
 
-    @Autowired
-    private TipoAlquilerFactory tipoAlquilerFactory;
+    private static String descripcion = "Finalizado";
 
     @Override
-    public void siguienteState(Solicitud solicitud) {
+    public void siguienteState(Solicitud solicitud, SolicitudRequest solicitudRequest) {
         //Ultimo paso, solicitud cerrada.
     }
 
@@ -24,16 +19,9 @@ public class FinalizadoState implements SolicitudState, Serializable {
         System.out.println("Estoy en el estado: " + FinalizadoState.class);
     }
 
-    @Override
-    public void finalizarSolicitud(Solicitud solicitud) {
-            Alquiler alquiler = solicitud.getAlquiler();
 
-            ITipoAlquiler tipoAlquiler = tipoAlquilerFactory.createTipoAlquiler(alquiler.getTipoAlquiler().getId());
-
-            tipoAlquiler.calcularCosto(alquiler);
-
-            alquiler.setFechaFin(new Date());
-            solicitud.getActualState().siguienteState(solicitud);
+    public String getDescripcion() {
+        return descripcion;
     }
 
 }
