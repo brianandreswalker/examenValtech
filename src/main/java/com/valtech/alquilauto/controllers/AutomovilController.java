@@ -1,7 +1,6 @@
 package com.valtech.alquilauto.controllers;
 
 import com.valtech.alquilauto.entities.Automovil;
-import com.valtech.alquilauto.responses.BaseResponse;
 import com.valtech.alquilauto.services.IAutomovilService;
 import javassist.NotFoundException;
 import org.slf4j.Logger;
