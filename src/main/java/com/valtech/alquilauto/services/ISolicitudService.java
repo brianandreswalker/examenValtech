@@ -4,6 +4,7 @@ import com.valtech.alquilauto.entities.Cliente;
 import com.valtech.alquilauto.entities.Solicitud;
 import com.valtech.alquilauto.requests.SolicitudRequest;
 import javassist.NotFoundException;
+import org.springframework.web.server.NotAcceptableStatusException;
 
 import java.util.List;
 import java.util.UUID;

@@ -1,7 +1,6 @@
 package com.valtech.alquilauto.services.impl;
 
 import com.valtech.alquilauto.AlquilautoApplication;
-import com.valtech.alquilauto.daos.ClienteDAO;
 import com.valtech.alquilauto.daos.SolicitudDAO;
 import com.valtech.alquilauto.entities.Alquiler;
 import com.valtech.alquilauto.entities.Automovil;
@@ -9,11 +8,11 @@ import com.valtech.alquilauto.entities.Cliente;
 import com.valtech.alquilauto.entities.Solicitud;
 import com.valtech.alquilauto.factories.tipoAlquiler.BaseTipoAlquilerFactory;
 import com.valtech.alquilauto.factories.tipoAlquiler.ITipoAlquiler;
-import com.valtech.alquilauto.factories.tipoAlquiler.impl.TipoAlquilerFactory;
 import com.valtech.alquilauto.requests.SolicitudRequest;
 import com.valtech.alquilauto.services.IAutomovilService;
 import com.valtech.alquilauto.services.IClienteService;
 import com.valtech.alquilauto.services.ISolicitudService;
+import com.valtech.alquilauto.states.FinalizadoState;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -46,6 +45,7 @@ public class SolicitudServiceImpl implements ISolicitudService {
     public Solicitud addOne(Cliente cliente) {
         Cliente cli;
         Solicitud solicitud = new Solicitud();
+        List<Solicitud> clienteSolicitudes = new ArrayList<>();
 
         if( cliente.getIdCliente() != null && !cliente.getIdCliente().equals("") ){
             cli = clienteService.findOne(cliente.getIdCliente());
@@ -56,6 +56,14 @@ public class SolicitudServiceImpl implements ISolicitudService {
         //Si existe el cliente
         if(cli != null){
             solicitud.setCliente(cli);
+            clienteSolicitudes = cli.getSolicitudes();
+            if(clienteSolicitudes != null && !clienteSolicitudes.isEmpty()){
+                for (Solicitud sol : clienteSolicitudes){
+                    if(!sol.getActualState().getClass().equals(FinalizadoState.class))
+                        throw new IllegalStateException("No se puede crear la Solicitud porque el Cliente posee Solicitudes sin Finalizar.");
+                }
+            }
+
         //Si no existe
         } else {
             cli = clienteService.addOne(cliente);

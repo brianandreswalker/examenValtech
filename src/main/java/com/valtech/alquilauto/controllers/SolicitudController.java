@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.NotAcceptableStatusException;
 
 import java.util.UUID;
 
@@ -68,10 +69,13 @@ public class SolicitudController {
             solicitudRequest.setId(UUID.fromString(id));
             solicitud = solicitudService.updateOne(solicitudRequest);
             return new ResponseEntity<Solicitud>(solicitud, HttpStatus.OK);
+        } catch (IllegalStateException exception) {
+            logger.info(exception.getMessage());
+            return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         } catch (NotFoundException exception) {
             logger.info(exception.getMessage());
             return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
-        }  catch (Exception exception) {
+        } catch (Exception exception) {
             logger.info("Error en el servicio : " + exception.getMessage());
             return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
