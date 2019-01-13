@@ -48,7 +48,7 @@ public class SolicitudController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addOne(@RequestBody Cliente cliente){
-        logger.info("POST / Creacion de la Solicitud request de cliente: " + cliente);
+        logger.info("POST / Creacion de la Solicitud request de cliente: " + cliente.toString());
         try {
             Solicitud solicitud = solicitudService.addOne(cliente);
             return new ResponseEntity<Solicitud>(solicitud, HttpStatus.CREATED);
@@ -64,14 +64,13 @@ public class SolicitudController {
         Solicitud solicitud = solicitudService.findOne(UUID.fromString(id));
         try {
             if(solicitud == null)
-                throw new NotFoundException("La Solicitud no existe");
-
+                throw new NotFoundException("Error en la busqueda. La Solicitud no existe");
             solicitudRequest.setId(UUID.fromString(id));
             solicitud = solicitudService.updateOne(solicitudRequest);
             return new ResponseEntity<Solicitud>(solicitud, HttpStatus.OK);
-        } catch (NotFoundException exc) {
-            logger.info("Error en la busqueda. La Solicitud no existe");
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } catch (NotFoundException exception) {
+            logger.info(exception.getMessage());
+            return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
         }  catch (Exception exception) {
             logger.info("Error en el servicio : " + exception.getMessage());
             return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

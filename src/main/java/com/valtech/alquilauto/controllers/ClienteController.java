@@ -12,8 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Entity;
 import javax.persistence.EntityExistsException;
+import java.util.MissingResourceException;
 import java.util.UUID;
 
 @RestController
@@ -46,7 +46,7 @@ public class ClienteController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addOne(@RequestBody Cliente cliente) throws EntityExistsException {
-        logger.info("POST / Creacion de Cliente request: " + cliente);
+        logger.info("POST / Creacion de Cliente request: " + cliente.toString());
         try {
             Cliente cli = clienteService.findOneByDni(cliente.getDniCliente());
             if(cli != null)
@@ -55,7 +55,10 @@ public class ClienteController {
         } catch (EntityExistsException exception) {
             logger.info(exception.getMessage());
             return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }catch (Exception exception) {
+        } catch (MissingResourceException exception) {
+            logger.info(exception.getMessage());
+            return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception exception) {
             logger.info("Error en la llamada al servicio: " + exception.getMessage());
             return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -83,7 +86,6 @@ public class ClienteController {
             return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @RequestMapping(value = "/{id}/solicitudes", method = RequestMethod.GET)
     public ResponseEntity<?> findSolicitudes(@PathVariable String id) throws NotFoundException{
@@ -117,7 +119,10 @@ public class ClienteController {
             } catch (EntityExistsException exception) {
                 logger.info(exception.getMessage());
                 return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-            } catch (Exception exception) {
+            } catch (MissingResourceException exception) {
+                logger.info(exception.getMessage());
+                return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+            }  catch (Exception exception) {
                 logger.info("Error en la llamada al servicio: " + exception.getMessage());
                 return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }

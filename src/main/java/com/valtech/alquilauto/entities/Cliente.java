@@ -1,6 +1,8 @@
 package com.valtech.alquilauto.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.util.List;
@@ -8,7 +10,9 @@ import java.util.UUID;
 
 public class Cliente implements Serializable {
 
-    private UUID id;
+    private static final Logger logger = LoggerFactory.getLogger(Cliente.class);
+
+    private UUID idCliente;
     private String nombreCliente;
     private String dniCliente;
 
@@ -16,20 +20,21 @@ public class Cliente implements Serializable {
     private List<Promocion> promociones;
 
     public Cliente(String nombreCliente, String dniCliente) {
+        logger.info("Creando un Cliente nombre: " + nombreCliente + " dni: " + dniCliente);
         this.nombreCliente = nombreCliente;
         this.dniCliente = dniCliente;
-        this.id = UUID.randomUUID();
+        this.idCliente = UUID.randomUUID();
     }
 
     public Cliente(){
     }
 
-    public UUID getId() {
-        return id;
+    public UUID getIdCliente() {
+        return idCliente;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setIdCliente(UUID idCliente) {
+        this.idCliente = idCliente;
     }
 
     public String getNombreCliente() {
@@ -65,4 +70,13 @@ public class Cliente implements Serializable {
         this.promociones = promociones;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "idCliente=" + idCliente +
+                ", nombreCliente='" + nombreCliente + '\'' +
+                ", dniCliente='" + dniCliente + '\'' +
+                ", promociones=" + promociones +
+                '}';
+    }
 }

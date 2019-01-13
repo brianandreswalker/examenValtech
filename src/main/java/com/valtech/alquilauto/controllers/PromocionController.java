@@ -23,7 +23,7 @@ public class PromocionController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addOne(@RequestBody Promocion promocion){
-        logger.info("POST / Creacion de la Promocion request: " + promocion);
+        logger.info("POST / Creacion de la Promocion request: " + promocion.toString());
         try {
             promocionService.addOne(promocion);
             return new ResponseEntity<Promocion>(promocion, HttpStatus.CREATED);

@@ -11,8 +11,10 @@ import com.valtech.alquilauto.factories.tipoAlquiler.BaseTipoAlquilerFactory;
 import com.valtech.alquilauto.factories.tipoAlquiler.ITipoAlquiler;
 import com.valtech.alquilauto.factories.tipoAlquiler.impl.TipoAlquilerFactory;
 import com.valtech.alquilauto.requests.SolicitudRequest;
+import com.valtech.alquilauto.services.IAutomovilService;
 import com.valtech.alquilauto.services.IClienteService;
 import com.valtech.alquilauto.services.ISolicitudService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -35,6 +37,9 @@ public class SolicitudServiceImpl implements ISolicitudService {
     IClienteService clienteService;
 
     @Autowired
+    IAutomovilService automovilService;
+
+    @Autowired
     BaseTipoAlquilerFactory tipoAlquilerFactory;
 
     @Override
@@ -42,7 +47,11 @@ public class SolicitudServiceImpl implements ISolicitudService {
         Cliente cli;
         Solicitud solicitud = new Solicitud();
 
-        cli = clienteService.findOneByDni(cliente.getDniCliente());
+        if( cliente.getIdCliente() != null && !cliente.getIdCliente().equals("") ){
+            cli = clienteService.findOne(cliente.getIdCliente());
+        } else {
+            cli = clienteService.findOneByDni(cliente.getDniCliente());
+        }
 
         //Si existe el cliente
         if(cli != null){
@@ -69,24 +78,29 @@ public class SolicitudServiceImpl implements ISolicitudService {
         return solicitudDAO.findAll();
     }
 
-    @Override
-    public List<Automovil> findAllAutomoviles(){
-        return solicitudDAO.findAllAutomoviles();
-    }
 
     @Override
-    public Solicitud updateOne(SolicitudRequest solicitudRequest){
+    public Solicitud updateOne(SolicitudRequest solicitudRequest) throws NotFoundException{
         Solicitud solicitud = solicitudDAO.findOne(solicitudRequest.getId());
         Alquiler alquiler = solicitud.getAlquiler();
 
         if( !solicitudRequest.getIdAutomovil().equals("") && solicitudRequest.getIdAutomovil() != null ){
-            Automovil automovil = solicitudDAO.findOneAutomovil(solicitudRequest.getIdAutomovil());
-            solicitudRequest.setAutomovil(automovil);
+            Automovil automovil = automovilService.findOne(solicitudRequest.getIdAutomovil());
+            if(automovil!=null){
+                solicitudRequest.setAutomovil(automovil);
+            } else {
+                throw new NotFoundException("El ID de Automovil solicitado no existe");
+            }
         }
 
         if( alquiler != null && alquiler.getIdTipoAlquiler() != null ){
-            ITipoAlquiler tipoAlquiler = tipoAlquilerFactory.createTipoAlquiler(alquiler.getIdTipoAlquiler());
-            solicitudRequest.setTipoAlquiler(tipoAlquiler);
+            ITipoAlquiler tipoAlquiler = tipoAlquilerFactory.createTipoAlquiler(solicitudRequest.getIdTipoAlquiler());
+            if(tipoAlquiler!=null){
+                solicitudRequest.setTipoAlquiler(tipoAlquiler);
+            } else {
+                throw new NotFoundException("El ID de Tipo de Alquiler solicitado no existe");
+            }
+
         }
 
         solicitud.getActualState().siguienteState(solicitud, solicitudRequest);

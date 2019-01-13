@@ -3,12 +3,16 @@ package com.valtech.alquilauto.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.valtech.alquilauto.states.PendienteState;
 import com.valtech.alquilauto.states.SolicitudState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Solicitud implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(Solicitud.class);
 
     private UUID id;
     private LocalDateTime fechaAlta;
@@ -20,13 +24,8 @@ public class Solicitud implements Serializable {
     private Alquiler alquiler;
     private Cliente cliente;
 
-    public Solicitud(Cliente cliente) {
-        this.actualState = new PendienteState();
-        this.cliente = cliente;
-        this.fechaAlta = LocalDateTime.now();
-    }
-
     public Solicitud() {
+        logger.info("Creando una Solicitud (constructor vacio)..");
         this.id = UUID.randomUUID();
         this.actualState = new PendienteState();
         this.fechaAlta = LocalDateTime.now();
@@ -106,5 +105,16 @@ public class Solicitud implements Serializable {
 
     public void setFechaAlta(LocalDateTime fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    @Override
+    public String toString() {
+        return "Solicitud{" +
+                "id=" + id +
+                ", fechaAlta=" + fechaAlta +
+                ", actualState=" + actualState +
+                ", alquiler=" + alquiler +
+                ", cliente=" + cliente +
+                '}';
     }
 }

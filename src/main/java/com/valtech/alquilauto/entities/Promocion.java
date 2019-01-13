@@ -1,20 +1,27 @@
 package com.valtech.alquilauto.entities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.UUID;
 
 public class Promocion {
+
+    private static final Logger logger = LoggerFactory.getLogger(Promocion.class);
 
     private UUID id;
     private String descripcion;
     private Double porcentajeDeDescuento;
 
     public Promocion(String descripcion, Double porcentajeDeDescuento) {
+        logger.info("Creando una Promocion descripcion: " + descripcion + " porcentajeDeDescuento: " + porcentajeDeDescuento);
         this.id = UUID.randomUUID();
         this.descripcion = descripcion;
         this.porcentajeDeDescuento = porcentajeDeDescuento;
     }
 
     public Double aplicarPromo(Double monto){
+        logger.info("Aplicando Promo de descuento: " + this.descripcion + " al monto " + monto);
         return monto - ((porcentajeDeDescuento/100) * monto);
     }
 
@@ -42,4 +49,12 @@ public class Promocion {
         this.porcentajeDeDescuento = porcentajeDeDescuento;
     }
 
+    @Override
+    public String toString() {
+        return "Promocion{" +
+                "id=" + id +
+                ", descripcion='" + descripcion + '\'' +
+                ", porcentajeDeDescuento=" + porcentajeDeDescuento +
+                '}';
+    }
 }

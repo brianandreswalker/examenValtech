@@ -12,11 +12,8 @@ public interface SolicitudDAO {
 
     List<Solicitud> findAll();
 
-    List<Automovil> findAllAutomoviles();
-
     Solicitud updateOne(Solicitud solicitud);
 
     Solicitud findOne(UUID solicitudId);
 
-    Automovil findOneAutomovil(Long automovilId);
 }

@@ -7,6 +7,4 @@ public interface SolicitudState {
 
     void siguienteState(Solicitud solicitud, SolicitudRequest solicitudRequest);
 
-    void printStatus(Solicitud solicitud);
-
 }

@@ -1,9 +1,14 @@
 package com.valtech.alquilauto.entities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public class Alquiler implements Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(Alquiler.class);
 
     private Automovil automovil;
     private Long idTipoAlquiler;
@@ -17,6 +22,7 @@ public class Alquiler implements Serializable {
     private boolean aplicarPromo;
 
     public Alquiler(Automovil automovil, Long idTipoAlquiler, boolean aplicarPromo) {
+        logger.info("Creando un Alquiler automovil: " + automovil + " idTipoAlquiler: " + idTipoAlquiler + " aplicarPromo: " + aplicarPromo);
         this.automovil = automovil;
         this.idTipoAlquiler = idTipoAlquiler;
         this.aplicarPromo = aplicarPromo;
@@ -95,5 +101,20 @@ public class Alquiler implements Serializable {
 
     public void setCantidadSemanas(Long cantidadSemanas) {
         this.cantidadSemanas = cantidadSemanas;
+    }
+
+    @Override
+    public String toString() {
+        return "Alquiler{" +
+                "automovil=" + automovil +
+                ", idTipoAlquiler=" + idTipoAlquiler +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", costoFinal=" + costoFinal +
+                ", cantidadKms=" + cantidadKms +
+                ", cantidadHs=" + cantidadHs +
+                ", cantidadSemanas=" + cantidadSemanas +
+                ", aplicarPromo=" + aplicarPromo +
+                '}';
     }
 }

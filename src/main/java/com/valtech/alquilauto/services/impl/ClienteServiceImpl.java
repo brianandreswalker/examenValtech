@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.UUID;
 
 @Service
@@ -19,7 +20,9 @@ public class ClienteServiceImpl implements IClienteService {
 
     @Override
     public Cliente addOne(Cliente cliente) {
-        return clienteDAO.addOne(cliente);
+        if( cliente.getDniCliente() == null || cliente.getDniCliente() == "")
+            throw new MissingResourceException("El campo dniCliente es necesario para crear un Cliente","","dniCliente");
+        return clienteDAO.addOne(new Cliente(cliente.getNombreCliente(), cliente.getDniCliente()));
     }
 
     @Override

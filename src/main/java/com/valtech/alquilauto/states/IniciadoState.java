@@ -3,12 +3,16 @@ package com.valtech.alquilauto.states;
 import com.valtech.alquilauto.entities.Alquiler;
 import com.valtech.alquilauto.entities.Solicitud;
 import com.valtech.alquilauto.requests.SolicitudRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class IniciadoState  implements SolicitudState, Serializable {
+
+    private static final Logger logger = LoggerFactory.getLogger(IniciadoState.class);
 
     private static String descripcion = "Iniciado";
 
@@ -24,12 +28,10 @@ public class IniciadoState  implements SolicitudState, Serializable {
         alquiler.getAutomovil().setDisponible(true);
 
         calcularCantidades(solicitud, solicitudRequest);
-        solicitud.setActualState(new FinalizadoState());
-    }
 
-    @Override
-    public void printStatus(Solicitud solicitud) {
-        System.out.println("Estoy en el estado: " + IniciadoState.class);
+        FinalizadoState nextState = new FinalizadoState();
+        logger.info("Pasando del Estado: " + descripcion + " al Estado: " + nextState.getDescripcion());
+        solicitud.setActualState(nextState);
     }
 
     public String getDescripcion() {

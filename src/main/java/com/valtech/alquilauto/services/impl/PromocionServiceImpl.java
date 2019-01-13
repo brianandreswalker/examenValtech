@@ -1,6 +1,5 @@
 package com.valtech.alquilauto.services.impl;
 
-import com.valtech.alquilauto.daos.ClienteDAO;
 import com.valtech.alquilauto.daos.PromocionDAO;
 import com.valtech.alquilauto.entities.Alquiler;
 import com.valtech.alquilauto.entities.Cliente;
