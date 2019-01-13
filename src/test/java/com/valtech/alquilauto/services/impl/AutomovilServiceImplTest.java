@@ -7,16 +7,17 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
 
 public class AutomovilServiceImplTest {
 
-    Automovil automovil1 = new Automovil(1L, true, "AAA111");
-    Automovil automovil2 = new Automovil(2L, true, "BBB222");
-    Automovil automovil3 = new Automovil(3L, true, "CCC222");
+    Automovil automovil1 = new Automovil(UUID.randomUUID(), true, "AAA111");
+    Automovil automovil2 = new Automovil(UUID.randomUUID(), true, "BBB222");
+    Automovil automovil3 = new Automovil(UUID.randomUUID(), true, "CCC222");
 
-    private static Map<Long, Automovil> arrayAutomoviles = new HashMap<>();
+    private static Map<UUID, Automovil> arrayAutomoviles = new HashMap<>();
 
     @Before
     public void setUp() throws Exception {
@@ -33,8 +34,9 @@ public class AutomovilServiceImplTest {
 
     @Test
     public void findOne() {
-        Automovil automovil = arrayAutomoviles.get(1L);
-        assertEquals((long)automovil.getIdAutomovil(), 1);
+        Automovil automovil4 = arrayAutomoviles.entrySet().iterator().next().getValue();
+        Automovil automovil5 = arrayAutomoviles.get(automovil1);
+        assertEquals(automovil4.getIdAutomovil(), automovil5.getIdAutomovil());
     }
 
 }

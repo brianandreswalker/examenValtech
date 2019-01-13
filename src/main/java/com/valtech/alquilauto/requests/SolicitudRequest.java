@@ -8,14 +8,14 @@ import java.util.UUID;
 public class SolicitudRequest {
 
     private UUID id;
-    private Long idAutomovil;
+    private UUID idAutomovil;
     private Long idTipoAlquiler;
     private boolean aplicarPromo;
     private Automovil automovil;
     private ITipoAlquiler tipoAlquiler;
     private Long cantidadKms;
 
-    public SolicitudRequest(UUID id, Long idAutomovil, Long idTipoAlquiler, boolean aplicarPromo) {
+    public SolicitudRequest(UUID id, UUID idAutomovil, Long idTipoAlquiler, boolean aplicarPromo) {
         this.id = id;
         this.idAutomovil = idAutomovil;
         this.idTipoAlquiler = idTipoAlquiler;
@@ -30,11 +30,11 @@ public class SolicitudRequest {
         this.id = id;
     }
 
-    public Long getIdAutomovil() {
+    public UUID getIdAutomovil() {
         return idAutomovil;
     }
 
-    public void setIdAutomovil(Long idAutomovil) {
+    public void setIdAutomovil(UUID idAutomovil) {
         this.idAutomovil = idAutomovil;
     }
 

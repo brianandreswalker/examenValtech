@@ -7,7 +7,11 @@ import java.util.UUID;
 
 public interface AutomovilDAO {
 
-    Automovil findOne(Long idAutomovil);
+    Automovil findOne(UUID idAutomovil);
 
     List<Automovil> findAll();
+
+    Automovil addOne(Automovil automovil);
+
+    Automovil findOneByPatente(String patenteAuto);
 }

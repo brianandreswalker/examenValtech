@@ -43,7 +43,7 @@ public class SolicitudServiceImplTest {
         if(setUpIsDone)
             return;
 
-        automovil = new Automovil(1L, true, "AAA111");
+        automovil = new Automovil(UUID.randomUUID(), true, "AAA111");
         alquiler = new Alquiler(automovil, 1L, true);
 
         cliente = new Cliente("Jose Perez", "11111111");
@@ -98,7 +98,7 @@ public class SolicitudServiceImplTest {
     @Test
     public void updateSolicitud() {
 
-        Automovil automovil3 = new Automovil(1L, true, "AAA111");
+        Automovil automovil3 = new Automovil(UUID.randomUUID(), true, "AAA111");
         Solicitud solicitud3 = new Solicitud();
         Cliente cliente1 = new Cliente("Jose Perez", "11111111");
 
@@ -110,7 +110,7 @@ public class SolicitudServiceImplTest {
         alquiler2.setFechaInicio(LocalDateTime.now());
         alquiler2.setFechaFin(LocalDateTime.now().plusDays(1));
 
-        SolicitudRequest solicitudRequest = new SolicitudRequest(null, 1L, 2L, false);
+        SolicitudRequest solicitudRequest = new SolicitudRequest(null, automovil3.getIdAutomovil(), 2L, false);
         solicitudRequest.setAutomovil(automovil3);
         solicitud3.setActualState(new PendienteState());
         solicitud3.getActualState().siguienteState(solicitud3, solicitudRequest);

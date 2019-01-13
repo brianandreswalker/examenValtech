@@ -13,17 +13,22 @@ import java.util.*;
 public class AlquilautoApplication {
 
 	private static Map<UUID, Solicitud> arraySolicitudes = new HashMap<>();
-	private static Map<Long, Automovil> arrayAutomoviles = new HashMap<>();
+	private static Map<UUID, Automovil> arrayAutomoviles = new HashMap<>();
 	private static Map<UUID, Cliente> arrayClientes = new HashMap<>();
 	private static Map<UUID, Promocion> arrayPromociones = new HashMap<>();
 
 	public static void main(String[] args) {
-		arrayAutomoviles.put(1L, new Automovil(1L,true,"AAA111"));
-		arrayAutomoviles.put(2L, new Automovil(2L,true,"BBB222"));
-		arrayAutomoviles.put(3L, new Automovil(3L,true,"CCC333"));
-		arrayAutomoviles.put(4L, new Automovil(4L,true,"DDD444"));
-		arrayAutomoviles.put(5L, new Automovil(5L,true,"EEE555"));
-		arrayAutomoviles.put(6L, new Automovil(6L,true,"FFF666"));
+		Automovil auto1 = new Automovil(UUID.randomUUID(), true, "AAA111");
+		Automovil auto2 = new Automovil(UUID.randomUUID(), true, "BBB222");
+		Automovil auto3 = new Automovil(UUID.randomUUID(), true, "CCC333");
+		Automovil auto4 = new Automovil(UUID.randomUUID(), true, "DDD444");
+		Automovil auto5 = new Automovil(UUID.randomUUID(), true, "EEE555");
+
+		arrayAutomoviles.put(auto1.getIdAutomovil(), auto1);
+		arrayAutomoviles.put(auto2.getIdAutomovil(), auto2);
+		arrayAutomoviles.put(auto3.getIdAutomovil(), auto3);
+		arrayAutomoviles.put(auto4.getIdAutomovil(), auto4);
+		arrayAutomoviles.put(auto5.getIdAutomovil(), auto5);
 
 		SpringApplication.run(AlquilautoApplication.class, args);
 	}
@@ -36,11 +41,11 @@ public class AlquilautoApplication {
 		AlquilautoApplication.arraySolicitudes = arraySolicitudes;
 	}
 
-	public static Map<Long, Automovil> getArrayAutomoviles() {
+	public static Map<UUID, Automovil> getArrayAutomoviles() {
 		return arrayAutomoviles;
 	}
 
-	public static void setArrayAutomoviles(Map<Long, Automovil> arrayAutomoviles) {
+	public static void setArrayAutomoviles(Map<UUID, Automovil> arrayAutomoviles) {
 		AlquilautoApplication.arrayAutomoviles = arrayAutomoviles;
 	}
 

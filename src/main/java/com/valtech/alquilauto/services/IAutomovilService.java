@@ -10,6 +10,10 @@ public interface IAutomovilService {
 
     List<Automovil> findAll();
 
-    Automovil findOne(Long idAutomovil);
+    Automovil findOne(UUID idAutomovil);
+
+    Automovil addOne(Automovil automovil);
+
+    Automovil findOneByPatente(String patenteAuto);
 
 }
